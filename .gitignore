@@ -1,4 +1,5 @@
 .svn/
 *.user
 tmp/
+bin/
 
