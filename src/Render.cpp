@@ -44,6 +44,7 @@ Render::Render(int w, int h, CommandQueue *c) {
     mostraFace = false;
     mostraPonto = false;
 
+    modo_inserir_vertice = false;
 
 }
 
@@ -102,10 +103,29 @@ void Render::run(void) {
             case DELETA:
                 deleta();
                 break;
+            case VDV:
+                vdv();
+                break;
+            case INSERIR_VERTICE:
+                toggle_inserir_vertice();
+                break;
+            default:
+                qDebug() << "default";
+                break;
         }
         atualizaScreen();
     } while (true);
 
+}
+
+void Render::toggle_inserir_vertice()
+{
+    modo_inserir_vertice = !modo_inserir_vertice;
+}
+
+void Render::inserir_vertice()
+{
+    qDebug() << "Insere gostoso!";
 }
 
 void Render::updateScreen(int w, int h)
@@ -352,7 +372,15 @@ void Render::click(void)
     QRgb rgb = backBuffer->pixel(p2);
     p1 = destransforma(p2);
 
+    inserir_vertice();
 
+    // TODO: p1 é o ponto na coordenada de mundo.
+    /* O método Interface::addFace() insere uma face recebendo uma lista de pontos,
+       deixando a estrutura de half-edge atualizada.
+       Esse método tem um problema de recriar uma HalfEdge. A solução é apagar a HalfEdge já existente.
+
+       No final: renderiza(); renderizaFront();
+    */
     if(rgb == corVerticeGrosso)
     {
         v = interface.getVerticeNear(p1);
@@ -803,7 +831,6 @@ void Render::deleta()
     //para verificar se a face f eh externa, use: interface.isExterna(f);
 
 
-
     if(hsel != NULL)
     {
 
@@ -869,4 +896,44 @@ void Render::deleta()
         }
     }
     qDebug() << "Chegou!";
+}
+
+void Render::vdv()
+{
+    QPainter buff(frontBuffer);
+    QPoint p;
+    HalfEdge *partida, *partida2;
+    HalfEdge *prox;
+    HalfEdge *half;
+    Vertex *aux;
+
+    Vertex *v;
+
+    buff.setPen(vizinhoScreen);
+
+    if(vsel != NULL)
+        partida = vsel->getEdge();
+    else
+        return;
+
+    partida2 = partida->getProx();
+
+    prox = partida2;
+    do {
+        aux = prox->getDestino();
+        buff.drawEllipse(transforma(aux->getPoint()),5,5);
+
+        prox = prox->getTwin()->getProx();
+    } while (prox != partida2);
+
+    partida2 = partida->getTwin()->getProx()->getProx();
+
+    prox = partida2;
+    do {
+        aux = prox->getDestino();
+        buff.drawEllipse(transforma(aux->getPoint()),5,5);
+
+        prox = prox->getTwin()->getProx();
+    } while (prox != partida2);
+
 }

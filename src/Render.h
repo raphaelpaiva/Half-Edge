@@ -59,6 +59,9 @@ private:
         void renderizaComponente(HalfEdge *h,QImage* b,QPen pen);
         bool componenteFaceUnica(HalfEdge *h);
         void deleta();
+        void vdv();
+        void toggle_inserir_vertice();
+        void inserir_vertice();
 
         Vertex* vsel;
         HalfEdge* hsel;
@@ -76,6 +79,7 @@ private:
         bool mostraPonto;
         bool mostraAresta;
         bool mostraFace;
+        bool modo_inserir_vertice;
         Interface interface;
         QPen arestaScreen;
         QPen selecionadoScreen;
@@ -88,7 +92,7 @@ private:
 
         QPen faceExternaBack;
         QPen arestaGrossaBack;
-        QPen verticeGrossoBack;        
+        QPen verticeGrossoBack;
 };
 
 uint qHash(const QPointF&);
