@@ -109,9 +109,6 @@ void Render::run(void) {
             case INSERIR_VERTICE:
                 toggle_inserir_vertice();
                 break;
-            default:
-                qDebug() << "default";
-                break;
         }
         atualizaScreen();
     } while (true);
@@ -123,9 +120,20 @@ void Render::toggle_inserir_vertice()
     modo_inserir_vertice = !modo_inserir_vertice;
 }
 
-void Render::inserir_vertice()
+void Render::inserir_vertice(QPointF p)
 {
-    qDebug() << "Insere gostoso!";
+    Face *f = interface.getFaceNear(p);
+
+    QVector<QPointF> pontos;
+
+    pontos.push_back(p);
+    pontos.push_back(f->getOuterComp()->getOrigem()->getPoint());
+    pontos.push_back(f->getOuterComp()->getProx()->getOrigem()->getPoint());
+
+    interface.addFace(pontos);
+
+    qDebug() << "Insere gostoso!" << p;
+    qDebug() << f;
 }
 
 void Render::updateScreen(int w, int h)
@@ -372,7 +380,15 @@ void Render::click(void)
     QRgb rgb = backBuffer->pixel(p2);
     p1 = destransforma(p2);
 
-    inserir_vertice();
+    if (modo_inserir_vertice)
+    {
+        inserir_vertice(p1);
+        toggle_inserir_vertice();
+
+        renderiza();
+        renderizaFront();
+        return;
+    }
 
     // TODO: p1 é o ponto na coordenada de mundo.
     /* O método Interface::addFace() insere uma face recebendo uma lista de pontos,
@@ -381,6 +397,7 @@ void Render::click(void)
 
        No final: renderiza(); renderizaFront();
     */
+
     if(rgb == corVerticeGrosso)
     {
         v = interface.getVerticeNear(p1);
