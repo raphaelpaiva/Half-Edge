@@ -131,9 +131,6 @@ void Render::inserir_vertice(QPointF p)
     pontos.push_back(f->getOuterComp()->getProx()->getOrigem()->getPoint());
 
     interface.addFace(pontos);
-
-    qDebug() << "Insere gostoso!" << p;
-    qDebug() << f;
 }
 
 void Render::updateScreen(int w, int h)
