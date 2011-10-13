@@ -124,6 +124,7 @@ void Render::inserir_vertice(QPointF p)
 {
     QVector<QPointF> pontos;
     HalfEdge *atual;
+    HalfEdge *lixo;
 
     Face *f = interface.getFaceNear(p);
     HalfEdge *h = f->getOuterComp();
@@ -135,11 +136,14 @@ void Render::inserir_vertice(QPointF p)
         pontos.push_back(atual->getOrigem()->getPoint());
         pontos.push_back(atual->getProx()->getOrigem()->getPoint());
 
+        lixo = atual;
         atual = atual->getProx();
 
         interface.addFace(pontos);
 
         pontos.clear();
+
+        interface.removeEdgeFromCollection(lixo);
     } while(atual != h);
 
     interface.removeFaceFromCollection(f);
