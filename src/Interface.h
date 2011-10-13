@@ -34,14 +34,19 @@ bool isExterna(Face* f);
 QVector<HalfEdge* > componentesFaceExterna;
 void clear(void);
 
-QMap<QPair<QPointF,QPointF>, HalfEdge *> &getMap();
+QMap<QPair<QPointF,QPointF>, HalfEdge *>& getMap();
 QVector<Face*>& getFaces();
+
+
+void removeFaceFromCollection(Face*);
+void removeEdgeFromCollection(HalfEdge*);
+
 
 private:
     KDTree *kdt;
-    QMap<QPointF,Vertex*> vertices;
     QVector<Face*> faces;
     QMap<QPair<QPointF,QPointF>, HalfEdge *> map;
+    QMap<QPointF, Vertex*> vertices;
     double minX, minY, maxX, maxY;
     Face *faceExterna;
 
@@ -52,6 +57,7 @@ private:
     double vProd(QPointF p1, QPointF p2);
     double eProd(QPointF p1, QPointF p2);
     double modulo2(QPointF p1, QPointF p2);
+
 };
 
 #endif // INTERFACE_H

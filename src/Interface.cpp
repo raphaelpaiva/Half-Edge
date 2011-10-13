@@ -74,18 +74,21 @@ void Interface::addFace(QVector<QPointF> in)
 
 Vertex* Interface::addVertex(QPointF p)
 {
-    QMap<QPointF,Vertex*>::iterator it;
+    QMap<QPointF, Vertex*>::iterator it;
+    Vertex* v = NULL;
 
     it = vertices.find(p);
-    if (it == vertices.end())
-    {
-        Vertex *v = new Vertex(p);
-        vertices[p] = v;
 
-        return v;
+    if(it != vertices.end())
+    {
+        v = it.value();
+    }else
+    {
+        v = new Vertex(p);
+        vertices.insert(p,v);
     }
 
-    return it.value();
+    return v;
 }
 
 HalfEdge* Interface::findTwin(QPointF u, QPointF v)
@@ -329,12 +332,11 @@ void Interface::clear(void)
         delete kdt;
     kdt = NULL;
 
-    vertices.clear();
     faces.clear();
     map.clear();
     componentesFaceExterna.clear();
+    vertices.clear();
 }
-
 
 QMap<QPair<QPointF,QPointF>, HalfEdge *>& Interface::getMap()
 {
@@ -344,4 +346,47 @@ QMap<QPair<QPointF,QPointF>, HalfEdge *>& Interface::getMap()
 QVector<Face*>& Interface::getFaces()
 {
     return faces;
+}
+
+void Interface::removeFaceFromCollection(Face* f)
+{
+    for(int i = 0; i < faces.size(); ++i)
+    {
+        if(faces[i] == f)
+        {
+            faces.remove(i);
+            return;
+        }
+    }
+}
+
+void Interface::removeEdgeFromCollection(HalfEdge* e)
+{
+    QMap<QPair<QPointF,QPointF>, HalfEdge* >::iterator it;
+    for(it = map.begin(); it != map.end(); ++it)
+    {
+        if(e == it.value())
+        {
+            map.erase(it);
+            break;
+        }
+    }
+
+    for(it = map.begin(); it != map.end(); ++it)
+    {
+        if(e->getTwin() == it.value())
+        {
+            map.erase(it);
+            break;
+        }
+    }
+
+    for(int i  =0; i < componentesFaceExterna.size(); ++i)
+    {
+        if(componentesFaceExterna[i] == e || componentesFaceExterna[i] == e->getTwin())
+        {
+            componentesFaceExterna[i] = componentesFaceExterna[i]->getProx();
+            break;
+        }
+    }
 }

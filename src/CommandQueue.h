@@ -25,7 +25,9 @@ enum Commands{
     ARESTAS,
     FACES,
     SELECT,
-    DELETA
+    DELETA,
+    VDV,
+    INSERIR_VERTICE
 };
 
 typedef struct _ExCom{
