@@ -44,9 +44,9 @@ MainWindow::MainWindow()
     vertice = tb->addAction(v,"");
     aresta = tb->addAction(a,"");
     face = tb->addAction(f, "");
-    del = tb->addAction("deleta");
+    del = tb->addAction("Deleta Aresta Ext.");
     vdv = tb->addAction("VDV");
-    inserirVertice = tb->addAction("inserir vértice");
+    inserirVertice = tb->addAction("Inserir Vertice");
     salvarArquivo = tb->addAction("Salvar");
 
     addToolBar(Qt::LeftToolBarArea, tb);
