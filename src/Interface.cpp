@@ -177,7 +177,7 @@ void Interface::addExtEdges(void)
     rect.setLeft(minX);
     rect.setRight(maxX);
 
-    kdt = new KDTree(map.values(),rect);
+    //kdt = new KDTree(map.values(),rect);
 }
 
 HalfEdge* Interface::getArestaNear(QPointF p)
