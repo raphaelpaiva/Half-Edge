@@ -3,6 +3,7 @@
 #include <PlyParser.h>
 #include <QRgb>
 
+#include "plywriter.h"
 
 Render::Render(int w, int h, CommandQueue *c) {
 
@@ -109,10 +110,17 @@ void Render::run(void) {
             case INSERIR_VERTICE:
                 toggle_inserir_vertice();
                 break;
+            case SALVAR_ARQUIVO:
+                salvar_arquivo();
+                break;
         }
         atualizaScreen();
     } while (true);
 
+}
+
+void Render::salvar_arquivo() {
+    writePly(interface);
 }
 
 void Render::toggle_inserir_vertice()

@@ -27,7 +27,8 @@ enum Commands{
     SELECT,
     DELETA,
     VDV,
-    INSERIR_VERTICE
+    INSERIR_VERTICE,
+    SALVAR_ARQUIVO
 };
 
 typedef struct _ExCom{
