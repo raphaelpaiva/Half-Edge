@@ -91,7 +91,7 @@ void MainWindow::clicou(QAction* a)
         fila->produz(FACES);
     }else if(a ==del)
     {
-        fila->produz(DELETA);
+        fila->produz(DELETA_ARESTA_EXT);
     }else if(a == vdv)
     {
         fila->produz(VDV);

@@ -25,7 +25,7 @@ enum Commands{
     ARESTAS,
     FACES,
     SELECT,
-    DELETA,
+    DELETA_ARESTA_EXT,
     VDV,
     INSERIR_VERTICE,
     SALVAR_ARQUIVO

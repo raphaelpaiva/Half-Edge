@@ -101,7 +101,7 @@ void Render::run(void) {
                 sel->setY(ex.y);
                 click();
                 break;
-            case DELETA:
+            case DELETA_ARESTA_EXT:
                 deleta();
                 break;
             case VDV:
