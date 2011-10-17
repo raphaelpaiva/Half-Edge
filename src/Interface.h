@@ -36,7 +36,7 @@ void clear(void);
 
 QMap<QPair<QPointF,QPointF>, HalfEdge *>& getMap();
 QVector<Face*>& getFaces();
-
+QMap<QPointF, Vertex*>& getVertices();
 
 void removeFaceFromCollection(Face*);
 void removeEdgeFromCollection(HalfEdge*);

@@ -177,7 +177,7 @@ void Interface::addExtEdges(void)
     rect.setLeft(minX);
     rect.setRight(maxX);
 
-    kdt = new KDTree(map.values(),rect);
+    //kdt = new KDTree(map.values(),rect);
 }
 
 HalfEdge* Interface::getArestaNear(QPointF p)
@@ -389,4 +389,8 @@ void Interface::removeEdgeFromCollection(HalfEdge* e)
             break;
         }
     }
+}
+
+QMap<QPointF, Vertex*>& Interface::getVertices() {
+    return vertices;
 }

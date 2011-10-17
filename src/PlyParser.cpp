@@ -61,7 +61,7 @@ PlyParser::PlyParser(const QString& filename)
 		            *linha >> nVertices;
 		         }
 		         else if(word == "face")
-		         {
+                         {
 		            *linha >> nFaces;
 		         }else 
                             qDebug() << "ERROR [2]!:#" << word << "#";
@@ -100,7 +100,7 @@ PlyParser::PlyParser(const QString& filename)
                             linha = new QTextStream(&s, QIODevice::ReadOnly);
 		            *linha >> val;
                             p.setX(val);
-		            *linha >> val;
+                            *linha >> val;
                             p.setY(val);
 		            pontos.push_back(p);
 		        }

@@ -62,7 +62,8 @@ HEADERS += src/Trab2FT.h \
     src/Vertex.h \
     src/Interface.h \
     src/PlyParser.h \
-    src/KDTree.h
+    src/KDTree.h \
+    src/plywriter.h
 HEADERS += src/MainWindow.h
 HEADERS += src/RenderPanel.h
 HEADERS += src/Render.h
@@ -75,7 +76,8 @@ SOURCES += src/Trab2FT.cpp \
     src/Vertex.cpp \
     src/Interface.cpp \
     src/PlyParser.cpp \
-    src/KDTree.cpp
+    src/KDTree.cpp \
+    src/plywriter.cpp
 SOURCES += src/MainWindow.cpp
 SOURCES += src/RenderPanel.cpp
 SOURCES += src/Render.cpp
@@ -83,3 +85,11 @@ SOURCES += src/CommandQueue.cpp
 
 # Arquivos dos resources (imagens por exemplo) do jogo
 RESOURCES += trab2FT.qrc
+
+
+
+
+
+
+
+

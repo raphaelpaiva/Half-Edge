@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <Qt>
 #include <CommandQueue.h>
+#include <plywriter.h>
 
 MainWindow::MainWindow()
 {
@@ -14,6 +15,7 @@ MainWindow::MainWindow()
     QIcon ad(":arrow-down");
     QIcon a(":aresta");
     QIcon v(":vertice");
+
     QIcon f(":face");
 
     fila = new CommandQueue();
@@ -21,14 +23,12 @@ MainWindow::MainWindow()
     setCentralWidget(centralpanel);
 
     tb = new QToolBar("Tool Bar", this);
-    fd = new QFileDialog(this, Qt::Window);
-    fd->setDirectory("../../halfedge/resources");
+    fd = new QFileDialog(this, Qt::Dialog);
+    fd->setDirectory("../resources");
     fd->setFilter("*.ply");
-    
     
     connect(tb, SIGNAL(actionTriggered( QAction * )), this, SLOT(clicou(QAction*)));
     connect(fd, SIGNAL(fileSelected(const QString &)), centralpanel, SLOT(recebeArquivo(const QString &)));
-    
     
     open = tb->addAction(op,"");
     tb->addSeparator();
@@ -40,12 +40,16 @@ MainWindow::MainWindow()
     panR = tb->addAction(ar, "");
     panD = tb->addAction(ad, "");
     tb->addSeparator();
+
     vertice = tb->addAction(v,"");
     aresta = tb->addAction(a,"");
     face = tb->addAction(f, "");
-    del = tb->addAction("deleta");
+    del = tb->addAction("Deleta Aresta Ext.");
     vdv = tb->addAction("VDV");
-	inserirVertice = tb->addAction("inserir vértice");
+    inserirVertice = tb->addAction("Inserir Vertice");
+    salvarArquivo = tb->addAction("Salvar");
+
+    deletaVertice = tb->addAction("Deletar vertice");
 
     addToolBar(Qt::LeftToolBarArea, tb);
 
@@ -76,6 +80,7 @@ void MainWindow::clicou(QAction* a)
         fila->produz(INCY);
     }else if(a == panR)
     {
+
         fila->produz(INCX);
     }else if(a == vertice)
     {
@@ -88,13 +93,23 @@ void MainWindow::clicou(QAction* a)
         fila->produz(FACES);
     }else if(a ==del)
     {
-        fila->produz(DELETA);
+        fila->produz(DELETA_ARESTA_EXT);
     }else if(a == vdv)
     {
         fila->produz(VDV);
     }else if(a == inserirVertice)
     {
         fila->produz(INSERIR_VERTICE);
+    }else if(a == salvarArquivo) {
+        QString fileName = QFileDialog::getSaveFileName(0,
+                 "Save PLY", "../resources",
+                 "*.ply");
+
+        setSaveToFileName(fileName);
+
+        fila->produz(SALVAR_ARQUIVO);
+    }else if(a == deletaVertice) {
+        fila->produz(DELETA_VERTICE);
     }
 }
 
