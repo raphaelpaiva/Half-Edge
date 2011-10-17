@@ -33,7 +33,8 @@ private:
    QAction *del;
    QAction *vdv;
    QAction *inserirVertice;
-
+   QAction *salvarArquivo;
+   QAction *deletaVertice;
 };
 
 

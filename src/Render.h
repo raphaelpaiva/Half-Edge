@@ -62,6 +62,8 @@ private:
         void vdv();
         void toggle_inserir_vertice();
         void inserir_vertice(QPointF p);
+        void salvar_arquivo();
+        void deletar_vertice();
 
         Vertex* vsel;
         HalfEdge* hsel;

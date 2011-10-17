@@ -3,7 +3,6 @@
 
 KDTree::KDTree(const QList<HalfEdge *> &list, QRectF limite)
 {
-return;
     if(list.size() > 0)
     {
         raiz = divide(new QList<HalfEdge *>(list), limite, true);
