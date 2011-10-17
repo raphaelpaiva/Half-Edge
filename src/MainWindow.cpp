@@ -24,7 +24,7 @@ MainWindow::MainWindow()
 
     tb = new QToolBar("Tool Bar", this);
     fd = new QFileDialog(this, Qt::Dialog);
-    fd->setDirectory("../../halfedge/resources");
+    fd->setDirectory("../resources");
     fd->setFilter("*.ply");
     
     connect(tb, SIGNAL(actionTriggered( QAction * )), this, SLOT(clicou(QAction*)));
@@ -48,6 +48,8 @@ MainWindow::MainWindow()
     vdv = tb->addAction("VDV");
     inserirVertice = tb->addAction("Inserir Vertice");
     salvarArquivo = tb->addAction("Salvar");
+
+    deletaVertice = tb->addAction("Deletar vertice");
 
     addToolBar(Qt::LeftToolBarArea, tb);
 
@@ -100,12 +102,14 @@ void MainWindow::clicou(QAction* a)
         fila->produz(INSERIR_VERTICE);
     }else if(a == salvarArquivo) {
         QString fileName = QFileDialog::getSaveFileName(0,
-                 "Save PLY", "../../halfedge/resources",
+                 "Save PLY", "../resources",
                  "*.ply");
 
         setSaveToFileName(fileName);
 
         fila->produz(SALVAR_ARQUIVO);
+    }else if(a == deletaVertice) {
+        fila->produz(DELETA_VERTICE);
     }
 }
 

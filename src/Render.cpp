@@ -113,6 +113,9 @@ void Render::run(void) {
             case SALVAR_ARQUIVO:
                 salvar_arquivo();
                 break;
+            case DELETA_VERTICE:
+                deletar_vertice();
+                break;
         }
         atualizaScreen();
     } while (true);
@@ -933,7 +936,6 @@ void Render::deleta()
             renderizaFront();
         }
     }
-    qDebug() << "Chegou!";
 }
 
 void Render::vdv()
@@ -974,4 +976,45 @@ void Render::vdv()
         prox = prox->getTwin()->getProx();
     } while (prox != partida2);
 
+}
+
+void Render::deletar_vertice() {
+    if (vsel == NULL) {
+        return;
+    }
+
+    HalfEdge* partida = vsel->getEdge();
+    HalfEdge::iterator it;
+
+    for(it = partida->v_begin(); it != partida->v_end(); ++it)
+    {
+        HalfEdge* atualizar = it.atual->getProx()->getTwin()->getProx()->getTwin();
+        atualizar->setProx(it.atual->getProx());
+
+        interface.removeEdgeFromCollection(it.atual);
+        interface.removeFaceFromCollection(it->getFace());
+    }
+    HalfEdge* atualizar = partida->getProx()->getTwin()->getProx()->getTwin();
+    atualizar->setProx(partida->getProx());
+
+    interface.removeEdgeFromCollection(partida);
+    interface.removeFaceFromCollection(partida->getFace());
+
+    interface.getVertices().remove(vsel->getPoint());
+
+    Face* newFace = new Face();
+    newFace->setOuterComp(partida->getProx());
+
+    HalfEdge* aux = partida->getProx();
+    do {
+        aux->setFace(newFace);
+        aux = aux->getProx();
+    } while (aux != partida->getProx());
+
+    interface.getFaces().append(newFace);
+
+    vsel = NULL;
+
+    renderiza();
+    renderizaFront();
 }
